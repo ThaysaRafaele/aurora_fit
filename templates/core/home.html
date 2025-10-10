@@ -1,9 +1,16 @@
-﻿<!DOCTYPE html>
+﻿{% load static %}
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aurora Fit - Home</title>
+    <title>Aurora Fit Place - Projeto Musa Fitness</title>
+    <meta name="description" content="O renascer para o seu corpo, mente e essência gerando uma nova versão de si mesma.">
+    
+    <link rel="icon" type="image/png" href="{% static 'images/logo-aurora-imagem.png' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/logo-aurora-imagem.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'images/logo-aurora-imagem.png' %}">
+    
     <style>
         * {
             margin: 0;
@@ -11,108 +18,775 @@
             box-sizing: border-box;
         }
         
+        :root {
+            --amarelo: #FFF4B7;
+            --laranja: #FFB366;
+            --laranja-escuro: #FC7116;
+            --roxo: #9B59B6;
+            --roxo-neon: #C471ED;
+            --preto: #1A1A1A;
+            --branco: #FFFFFF;
+        }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
+            line-height: 1.6;
+            color: var(--preto);
+            background: var(--branco);
+        }
+        
+        /* HEADER/NAVEGAÇÃO */
+        header {
+            background: linear-gradient(135deg, var(--preto) 0%, #2a2a2a 100%);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #9B59B6 0%, #FFB366 100%);
-            color: white;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: transform 0.3s;
+        }
+        
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-container img {
+            border-radius: 20%;
+            height: 70px;
+            width: auto;
+            filter: drop-shadow(0 0 10px rgba(255, 179, 102, 0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .logo-text {
+            color: var(--branco);
+        }
+        
+        .logo-text h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--laranja), var(--roxo));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+        
+        .logo-text p {
+            font-size: 0.8rem;
+            color: var(--amarelo);
+            font-style: italic;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--branco);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--laranja), var(--roxo));
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a:hover {
+            color: var(--laranja);
+        }
+        
+        .btn-cta {
+            background: linear-gradient(135deg, var(--laranja), var(--roxo));
+            color: var(--branco);
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4);
+        }
+        
+        .btn-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(155, 89, 182, 0.6);
+        }
+        
+        /* HERO SECTION */
+        .hero {
+            margin-top: 80px;
+            background: var(--amarelo);
+            padding: 5rem 2rem;
             text-align: center;
-            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(255, 179, 102, 0.1) 100%);
+            pointer-events: none;
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-logo {
+            width: 500px;
+            height: auto;
+            filter: drop-shadow(0 10px 30px rgba(252, 113, 22, 0.4));
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .hero h2 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--laranja-escuro), var(--roxo));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero .tagline {
+            font-size: 1.6rem;
+            font-style: italic;
+            margin-bottom: 2rem;
+            color: var(--preto);
+            line-height: 1.8;
+            font-weight: 500;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            animation: fadeInUp 1s ease-out 0.4s backwards;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--laranja-escuro), var(--laranja));
+            color: var(--branco);
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(252, 113, 22, 0.4);
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(252, 113, 22, 0.6);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--roxo);
+            padding: 1.2rem 3rem;
+            border: 3px solid var(--roxo);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--roxo);
+            color: var(--branco);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(155, 89, 182, 0.4);
+        }
+        
+        /* SECTIONS */
+        .section {
+            padding: 5rem 2rem;
+        }
+        
+        .section-alt {
+            background: linear-gradient(135deg, rgba(255, 244, 183, 0.4), rgba(155, 89, 182, 0.15));
         }
         
         .container {
-            max-width: 800px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
-        h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .tagline {
-            font-size: 1.5rem;
-            margin-bottom: 3rem;
-            opacity: 0.95;
-        }
-        
-        .success-box {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 3rem;
-            border-radius: 20px;
-            margin-bottom: 2rem;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-        }
-        
-        .success-box h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .success-box p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-        
-        .button {
-            display: inline-block;
-            background: white;
-            color: #9B59B6;
-            padding: 1rem 2.5rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin: 0.5rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        
-        .button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-        
-        .emoji {
+        .section-title {
+            text-align: center;
             font-size: 3rem;
             margin-bottom: 1rem;
+            color: var(--preto);
+            font-weight: 800;
+            position: relative;
+            display: inline-block;
+            width: 100%;
         }
         
-        .footer {
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--laranja), var(--roxo));
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.4rem;
+            color: var(--roxo);
+            margin-bottom: 3rem;
+            font-style: italic;
+            font-weight: 600;
+        }
+        
+        /* SOBRE O PROJETO */
+        .sobre-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .sobre-content p {
+            font-size: 1.3rem;
+            line-height: 2;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(255, 179, 102, 0.2), rgba(155, 89, 182, 0.2));
+            padding: 3rem;
+            border-radius: 25px;
+            border-left: 6px solid var(--laranja-escuro);
+            margin: 2rem 0;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .highlight-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .highlight-box p {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--preto);
+        }
+        
+        /* CARDS MVV */
+        .mvv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .mvv-card {
+            background: var(--branco);
+            padding: 3rem;
+            border-radius: 25px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            transition: all 0.4s;
+            border-top: 6px solid;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mvv-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            transition: left 0.5s;
+        }
+        
+        .mvv-card:hover::before {
+            left: 100%;
+        }
+        
+        .mvv-card:nth-child(1) {
+            border-top-color: var(--laranja);
+        }
+        
+        .mvv-card:nth-child(2) {
+            border-top-color: var(--roxo);
+        }
+        
+        .mvv-card:nth-child(3) {
+            border-top-color: var(--laranja-escuro);
+        }
+        
+        .mvv-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(155, 89, 182, 0.25);
+        }
+        
+        .mvv-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .mvv-card h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--preto);
+            font-weight: 700;
+        }
+        
+        .mvv-card p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: #555;
+        }
+        
+        /* VALORES */
+        .valores-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
             margin-top: 2rem;
-            opacity: 0.8;
-            font-size: 0.9rem;
+        }
+        
+        .valor-item {
+            background: var(--branco);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--laranja);
+            transition: all 0.3s;
+        }
+        
+        .valor-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 30px rgba(252, 113, 22, 0.3);
+            border-left-width: 8px;
+        }
+        
+        .valor-item strong {
+            color: var(--roxo);
+            font-size: 1.3rem;
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+        
+        .valor-item p {
+            color: #555;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+        
+        /* FOOTER */
+        footer {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: var(--branco);
+            padding: 3rem 2rem 1rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            color: var(--laranja);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .footer-section p {
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.9;
+        }
+        
+        .footer-bottom p {
+            margin-bottom: 0.5rem;
+        }
+        
+        .dev-signature {
+            color: var(--roxo-neon);
+            font-weight: 700;
+            font-size: 1.1rem;
+            animation: glow 2s ease-in-out infinite;
+            text-shadow: 0 0 10px var(--roxo-neon);
+            margin-top: 0.5rem;
+        }
+        
+        @keyframes glow {
+            0%, 100% {
+                text-shadow: 0 0 10px var(--roxo-neon), 0 0 20px var(--roxo-neon);
+                transform: scale(1);
+            }
+            50% {
+                text-shadow: 0 0 20px var(--roxo-neon), 0 0 30px var(--roxo-neon), 0 0 40px var(--roxo);
+                transform: scale(1.05);
+            }
+        }
+        
+        /* RESPONSIVO */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .mvv-grid,
+            .valores-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-logo {
+                width: 120px;
+            }
+        }
+        
+        /* SCROLL ANIMATIONS */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="emoji">🌅</div>
-        <h1>Aurora Fit</h1>
-        <p class="tagline">Mulheres em ascensão, renovação e renascimento</p>
-        
-        <div class="success-box">
-            <h2>✅ Sistema Funcionando Perfeitamente!</h2>
-            <p><strong>Banco de dados:</strong> Criado e configurado com sucesso</p>
-            <p><strong>Models:</strong> CustomUser, Student, Payments, Videos - Todos criados!</p>
-            <p><strong>Status:</strong> Pronto para desenvolvimento</p>
+    <!-- HEADER -->
+    <header>
+        <div class="nav-container">
+            <div class="logo-container">
+                <img src="{% static 'images/logo-aurora-imagem.png' %}" alt="Aurora Fit Place Logo">
+                <div class="logo-text">
+                    <h1>Aurora Fit Place</h1>
+                    <p>Projeto Musa Fitness</p>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="#sobre">Sobre</a>
+                <a href="#missao">Missão</a>
+                <a href="#valores">Valores</a>
+                <a href="#contato">Contato</a>
+            </nav>
+            <a href="/admin" class="btn-cta">Entrar</a>
         </div>
-        
-        <div>
-            <a href="/admin" class="button">🔧 Acessar Admin</a>
-            <a href="/admin" class="button">👤 Login</a>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <img src="{% static 'images/logo-aurora-sem-fundo.png' %}" alt="Aurora Fit Place" class="hero-logo">
+            <h2>Aurora Fit Place</h2>
+            <p class="tagline">"O renascer para o seu corpo, mente e essência gerando uma nova versão de si mesma."</p>
+            <div class="hero-buttons">
+                <a href="#sobre" class="btn-primary">Conheça o Projeto</a>
+                <a href="#contato" class="btn-secondary">Entre em Contato</a>
+            </div>
         </div>
-        
-        <div class="footer">
+    </section>
+
+    <!-- SOBRE O PROJETO -->
+    <section id="sobre" class="section fade-in">
+        <div class="container">
+            <h2 class="section-title">🌷 Mais que um espaço de treino</h2>
+            <p class="section-subtitle">Um movimento de transformação feminina</p>
+            
+            <div class="sobre-content">
+                <p>
+                    Na <strong>Aurora Fit Place</strong>, acreditamos que cada mulher carrega dentro de si uma força extraordinária, muitas vezes adormecida, esperando o momento certo para despertar.
+                </p>
+                <p>
+                    E é exatamente isso que fazemos aqui: <strong>ajudamos você a renascer</strong> para o seu melhor corpo, a sua melhor energia e a sua melhor versão.
+                </p>
+                
+                <div class="highlight-box">
+                    <p>
+                        Mais do que um estúdio de treino, somos um espaço de autoconhecimento, saúde e performance personalizada, onde cada detalhe é pensado para o universo feminino.
+                    </p>
+                </div>
+                
+                <p>
+                    Respeitamos o seu tempo, suas fases, suas particularidades e suas emoções, porque entendemos que o corpo da mulher é cíclico, e sua evolução também.
+                </p>
+                <p>
+                    Aqui, <strong>o emagrecimento é um ato de amor-próprio</strong>, e a performance é a expressão da sua liberdade.
+                </p>
+                <p style="font-size: 1.5rem; font-weight: 700; color: var(--roxo); margin-top: 2rem;">
+                    Na Aurora, você se sente cuidada, desafiada e inspirada a brilhar todos os dias. ✨
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MISSÃO, VISÃO E VALORES -->
+    <section class="section section-alt fade-in">
+        <div class="container">
+            <div class="mvv-grid">
+                <!-- VISÃO -->
+                <div class="mvv-card">
+                    <div class="mvv-icon">💫</div>
+                    <h3>VISÃO</h3>
+                    <p>
+                        Ser referência em bem-estar feminino e performance individualizada, transformando a forma como as mulheres se relacionam com o próprio corpo, conquistando saúde, autoestima e autonomia através do movimento.
+                    </p>
+                    <p style="margin-top: 1rem;">
+                        Inspirar cada mulher a descobrir seu próprio ritmo, respeitar suas fases e conquistar uma performance que vá além do físico. Uma performance que reflete liberdade, bem estar e valorização pessoal.
+                    </p>
+                    <p style="margin-top: 1rem;">
+                        Ser um refúgio de força e autoconhecimento para mulheres que desejam transformar o corpo, a mente e a vida por meio do movimento.
+                    </p>
+                </div>
+
+                <!-- MISSÃO -->
+                <div class="mvv-card" id="missao">
+                    <div class="mvv-icon">💪</div>
+                    <h3>MISSÃO</h3>
+                    <p style="font-weight: 700; color: var(--laranja-escuro); margin-bottom: 1rem; font-size: 1.2rem;">
+                        Cuidar de cada mulher de forma única.
+                    </p>
+                    <p>
+                        Nosso propósito é oferecer treinos personalizados, pensados para o corpo feminino em todas as suas fases e formas, promovendo o emagrecimento saudável e o fortalecimento integral.
+                    </p>
+                    <p style="margin-top: 1rem;">
+                        Mais do que resultados estéticos, buscamos despertar a potência interior que existe em cada uma, ajudando-as a se sentirem fortes, seguras e em total equilíbrio com quem são.
+                    </p>
+                    <p style="color: var(--laranja-escuro); margin-top: 1rem; font-style: italic;">
+                        Aqui, cada treino é um encontro entre cuidado, ciência e emoção.
+                    </p>
+                </div>
+
+                <!-- VALORES HEADER -->
+                <div class="mvv-card" id="valores">
+                    <div class="mvv-icon">🌸</div>
+                    <h3>VALORES</h3>
+                    <p>
+                        Nossos valores guiam cada decisão, cada treino e cada relacionamento que construímos com nossas alunas:
+                    </p>
+                </div>
+            </div>
+
+            <!-- LISTA DE VALORES -->
+            <div class="valores-list">
+                <div class="valor-item">
+                    <strong>✨ Individualidade</strong>
+                    <p>Cada mulher é um universo e merece um treino feito sob medida.</p>
+                </div>
+                <div class="valor-item">
+                    <strong>💗 Cuidado e acolhimento</strong>
+                    <p>Criamos um ambiente onde corpo e mente são respeitados.</p>
+                </div>
+                <div class="valor-item">
+                    <strong>🔥 Empoderamento</strong>
+                    <p>Acreditamos no poder da mulher de decidir, evoluir e se superar.</p>
+                </div>
+                <div class="valor-item">
+                    <strong>🌿 Saúde real</strong>
+                    <p>Priorizamos o bem-estar sustentável, e não padrões inalcançáveis.</p>
+                </div>
+                <div class="valor-item">
+                    <strong>🎯 Excelência e propósito</strong>
+                    <p>Unimos conhecimento técnico e sensibilidade humana para resultados verdadeiros.</p>
+                </div>
+                <div class="valor-item">
+                    <strong>🌙 Respeito às fases femininas</strong>
+                    <p>Entendemos que o corpo da mulher muda e ajustamos cada etapa da jornada com sabedoria e empatia.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="section fade-in">
+        <div class="container" style="text-align: center;">
+            <h2 class="section-title">Pronta para despertar sua força interior?</h2>
+            <p style="font-size: 1.3rem; margin-bottom: 2rem; color: #555;">
+                Junte-se a nós e descubra o poder de transformação que existe em você.
+            </p>
+            <a href="#contato" class="btn-primary">Quero Fazer Parte</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contato">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Aurora Fit Place</h3>
+                <p>Projeto Musa Fitness</p>
+                <p>Transformando vidas através do movimento</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contato</h3>
+                <p>📧 contato@aurorafitplace.com.br</p>
+                <p>📱 WhatsApp: (67) 99649-1303</p>
+                <p>📍 Corumbá, MS</p>
+            </div>
+            <div class="footer-section">
+                <h3>Redes Sociais</h3>
+                <p>Instagram: @aurorafitplace</p>
+                <p>Facebook: /aurorafitplace</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Aurora Fit Place. Todos os direitos reservados.</p>
             <p>Desenvolvido com 💜 para transformar vidas</p>
-            <p>By Thaysa Rafaele</p>
+            <p class="dev-signature">By Thaysa Rafaele</p>
         </div>
-    </div>
+    </footer>
+
+    <script>
+        // Animação de scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
